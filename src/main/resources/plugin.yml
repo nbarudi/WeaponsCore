@@ -1,0 +1,6 @@
+name: WeaponsCore
+version: '${project.version}'
+main: ca.bungo.weaponscore.Weaponscore
+authors: [ Bungo, nbarudi, Nick ]
+description: Core files containing unique weapons
+website: bungo.ca
