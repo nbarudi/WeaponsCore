@@ -1,6 +1,9 @@
 name: WeaponsCore
-version: '${project.version}'
-main: ca.bungo.weaponscore.Weaponscore
-authors: [ Bungo, nbarudi, Nick ]
-description: Core files containing unique weapons
-website: bungo.ca
+main: ca.bungo.core.Core
+authors: [Spaces, WhatATopic, Bungo, Nbarudi, Nick]
+version: ${project.version}
+depend: [Vault, WorldGuard, WorldEdit]
+commands:
+  getitems:
+    description: Spawn custom weapons
+    usage: /getitems
