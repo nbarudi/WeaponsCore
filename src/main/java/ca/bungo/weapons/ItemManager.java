@@ -2,6 +2,7 @@ package ca.bungo.weapons;
 
 import java.util.ArrayList;
 
+import ca.bungo.weapons.classes.*;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.minecraft.server.v1_8_R3.NBTTagList;
 
@@ -17,69 +18,6 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import ca.bungo.core.Core;
-import ca.bungo.weapons.classes.AEBow;
-import ca.bungo.weapons.classes.AbominableSnowman;
-import ca.bungo.weapons.classes.AngelWings;
-import ca.bungo.weapons.classes.Assassin8;
-import ca.bungo.weapons.classes.ForsakenDefender;
-import ca.bungo.weapons.classes.BattleAxe;
-import ca.bungo.weapons.classes.Beast;
-import ca.bungo.weapons.classes.BlindingRod;
-import ca.bungo.weapons.classes.BoneSword;
-import ca.bungo.weapons.classes.BunnyBeater;
-import ca.bungo.weapons.classes.BunnyEars;
-import ca.bungo.weapons.classes.CaptainAmerica;
-import ca.bungo.weapons.classes.Chainsaw;
-import ca.bungo.weapons.classes.CloudBoots;
-import ca.bungo.weapons.classes.Clover;
-import ca.bungo.weapons.classes.CupidBow;
-import ca.bungo.weapons.classes.RelentlessReaver;
-import ca.bungo.weapons.classes.EMP;
-import ca.bungo.weapons.classes.EggsplodingEgg;
-import ca.bungo.weapons.classes.VenomSnake;
-import ca.bungo.weapons.classes.ElectroMagnet;
-import ca.bungo.weapons.classes.EnderBow;
-import ca.bungo.weapons.classes.Excalibur;
-import ca.bungo.weapons.classes.FireBall;
-import ca.bungo.weapons.classes.FireWorkBow;
-import ca.bungo.weapons.classes.FortuneShears;
-import ca.bungo.weapons.classes.FortyFoot;
-import ca.bungo.weapons.classes.GoldTurkey;
-import ca.bungo.weapons.classes.HealingShears;
-import ca.bungo.weapons.classes.HulkSmash;
-import ca.bungo.weapons.classes.IceBlade;
-import ca.bungo.weapons.classes.InvisRing;
-import ca.bungo.weapons.classes.IronManSuit;
-import ca.bungo.weapons.classes.LOLSword;
-import ca.bungo.weapons.classes.MagicFeather;
-import ca.bungo.weapons.classes.MagicSperm;
-import ca.bungo.weapons.classes.MoneyBag;
-import ca.bungo.weapons.classes.TrainingSword;
-import ca.bungo.weapons.classes.WoefulSabre;
-import ca.bungo.weapons.classes.NoobsBlade;
-import ca.bungo.weapons.classes.ParkourBoots;
-import ca.bungo.weapons.classes.Payday;
-import ca.bungo.weapons.classes.PianoKey;
-import ca.bungo.weapons.classes.PoisonBow;
-import ca.bungo.weapons.classes.Prot4;
-import ca.bungo.weapons.classes.Prot4AE;
-import ca.bungo.weapons.classes.Prot5;
-import ca.bungo.weapons.classes.Prot5AE;
-import ca.bungo.weapons.classes.Prot6;
-import ca.bungo.weapons.classes.Prot6AE;
-import ca.bungo.weapons.classes.RabbitsFoot;
-import ca.bungo.weapons.classes.RocketBoots;
-import ca.bungo.weapons.classes.SnowArmor;
-import ca.bungo.weapons.classes.SparringAxe;
-import ca.bungo.weapons.classes.SpellBook;
-import ca.bungo.weapons.classes.SpidermanBow;
-import ca.bungo.weapons.classes.SunGlasses;
-import ca.bungo.weapons.classes.ThorsHammer;
-import ca.bungo.weapons.classes.RemorsefulBlade;
-import ca.bungo.weapons.classes.WildTurkey;
-import ca.bungo.weapons.classes.WitchHat;
-import ca.bungo.weapons.classes.WitchsMagic;
-import ca.bungo.weapons.classes.ZeusBow;
 
 public class ItemManager
 {

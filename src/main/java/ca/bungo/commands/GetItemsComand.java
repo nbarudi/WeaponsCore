@@ -54,12 +54,14 @@ public class GetItemsComand implements CommandExecutor, Listener {
         itemStorage[0].setItem(49, forward);
         itemStorage[1].setItem(49, backward);
 
-        int i;
-        for(i = 0; i < 45; i++){
-            itemStorage[0].addItem(itemStacks.get(i));
-        }
-        for(i = 44; i < 54; i++){
-            itemStorage[1].addItem(itemStacks.get(i));
+        int i = 0;
+        for(ItemStack item : itemStacks){
+            if(i >= 45){
+                itemStorage[1].addItem(item);
+            }else{
+                itemStorage[0].addItem(item);
+            }
+            i++;
         }
     }
 
@@ -88,7 +90,7 @@ public class GetItemsComand implements CommandExecutor, Listener {
             event.setCancelled(true);
             Player player = (Player)event.getWhoClicked();
             ItemStack item = event.getCurrentItem();
-            if(item != null){
+            if(item != null && item.getType() != Material.AIR){
                 if(item.getItemMeta() != null){
                     if(item.getItemMeta().equals(forward.getItemMeta())){
                         player.closeInventory();

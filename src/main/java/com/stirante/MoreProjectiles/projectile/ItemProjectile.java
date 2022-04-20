@@ -27,7 +27,7 @@ import java.util.List;
  * Projectile made from item entity
  */
 public class ItemProjectile extends EntityItem implements IProjectile, CustomProjectile {
-    private Field age;
+    private int age;
     private final EntityLiving shooter;
     private int lastTick;
     private final String name;
@@ -82,6 +82,7 @@ public class ItemProjectile extends EntityItem implements IProjectile, CustomPro
      */
     public ItemProjectile(String name, LivingEntity shooter, org.bukkit.inventory.ItemStack item, float power) {
         super(((CraftLivingEntity) shooter).getHandle().world);
+        this.age = 0;
         lastTick = MinecraftServer.currentTick;
         this.name = name;
         this.pickupDelay = Integer.MAX_VALUE;
@@ -108,13 +109,7 @@ public class ItemProjectile extends EntityItem implements IProjectile, CustomPro
         h();
         int elapsedTicks = MinecraftServer.currentTick - this.lastTick;
         this.pickupDelay -= elapsedTicks;
-        try{
-            age = getClass().getSuperclass().getDeclaredField("age");
-            age.setAccessible(true);
-            age.set(this, (int)age.get(this) + elapsedTicks);
-        }catch(NoSuchFieldException | IllegalAccessException e){
-            throw new RuntimeException("BAD NMS CODE!", e);
-        }
+        age += elapsedTicks;
         lastTick = MinecraftServer.currentTick;
 
         this.lastX = this.locX;
@@ -152,7 +147,7 @@ public class ItemProjectile extends EntityItem implements IProjectile, CustomPro
             this.motY *= -0.5D;
         }
 
-        if ((int)age.get(this) >= 1000) {
+        if (this.age >= 1000) {
             die();
         }
 
@@ -276,7 +271,7 @@ public class ItemProjectile extends EntityItem implements IProjectile, CustomPro
     @SneakyThrows
     @Override
     public void d(EntityHuman entityhuman) {
-        if (entityhuman == shooter && (int)age.get(this) <= 3) return;
+        if (entityhuman == shooter && this.age <= 3) return;
         LivingEntity living = entityhuman.getBukkitEntity();
         CustomProjectileHitEvent event = new ItemProjectileHitEvent(this, living, getItem());
         Bukkit.getPluginManager().callEvent(event);

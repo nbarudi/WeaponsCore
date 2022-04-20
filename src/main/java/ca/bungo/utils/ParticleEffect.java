@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -15,7 +16,39 @@ import com.stirante.MoreProjectiles.ReflectionUtil;
 
 public enum ParticleEffect
 {
-	HUGE_EXPLOSION("hugeexplosion", 0),  LARGE_EXPLODE("largeexplode", 1),  FIREWORKS_SPARK("fireworksSpark", 2),  BUBBLE("bubble", 3),  SUSPEND("suspend", 4),  DEPTH_SUSPEND("depthSuspend", 5),  TOWN_AURA("townaura", 6),  CRIT("crit", 7),  MAGIC_CRIT("magicCrit", 8),  MOB_SPELL("mobSpell", 9),  MOB_SPELL_AMBIENT("mobSpellAmbient", 10),  SPELL("spell", 11),  INSTANT_SPELL("instantSpell", 12),  WITCH_MAGIC("witchMagic", 13),  NOTE("note", 14),  PORTAL("portal", 15),  ENCHANTMENT_TABLE("enchantmenttable", 16),  EXPLODE("explode", 17),  FLAME("flame", 18),  LAVA("lava", 19),  FOOTSTEP("footstep", 20),  SPLASH("splash", 21),  LARGE_SMOKE("largesmoke", 22),  CLOUD("cloud", 23),  RED_DUST("reddust", 24),  SNOWBALL_POOF("snowballpoof", 25),  DRIP_WATER("dripWater", 26),  DRIP_LAVA("dripLava", 27),  SNOW_SHOVEL("snowshovel", 28),  SLIME("slime", 29),  HEART("heart", 30),  ANGRY_VILLAGER("angryVillager", 31),  HAPPY_VILLAGER("happyVillager", 32);
+	HUGE_EXPLOSION("hugeexplosion", 0, EnumParticle.EXPLOSION_HUGE),
+	LARGE_EXPLODE("largeexplode", 1, EnumParticle.EXPLOSION_LARGE),
+	FIREWORKS_SPARK("fireworksSpark", 2, EnumParticle.FIREWORKS_SPARK),
+	BUBBLE("bubble", 3, EnumParticle.WATER_BUBBLE),
+	SUSPEND("suspend", 4, EnumParticle.SUSPENDED),
+	DEPTH_SUSPEND("depthSuspend", 5, EnumParticle.SUSPENDED_DEPTH),
+	TOWN_AURA("townaura", 6, EnumParticle.TOWN_AURA),
+	CRIT("crit", 7, EnumParticle.CRIT),
+	MAGIC_CRIT("magicCrit", 8, EnumParticle.CRIT_MAGIC),
+	MOB_SPELL("mobSpell", 9, EnumParticle.SPELL_MOB),
+	MOB_SPELL_AMBIENT("mobSpellAmbient", 10, EnumParticle.SPELL_MOB_AMBIENT),
+	SPELL("spell", 11, EnumParticle.SPELL),
+	INSTANT_SPELL("instantSpell", 12, EnumParticle.SPELL_INSTANT),
+	WITCH_MAGIC("witchMagic", 13, EnumParticle.SPELL_WITCH),
+	NOTE("note", 14, EnumParticle.NOTE),
+	PORTAL("portal", 15, EnumParticle.PORTAL),
+	ENCHANTMENT_TABLE("enchantmenttable", 16, EnumParticle.ENCHANTMENT_TABLE),
+	EXPLODE("explode", 17, EnumParticle.EXPLOSION_NORMAL),
+	FLAME("flame", 18, EnumParticle.FLAME),
+	LAVA("lava", 19, EnumParticle.LAVA),
+	FOOTSTEP("footstep", 20, EnumParticle.FOOTSTEP),
+	SPLASH("splash", 21, EnumParticle.WATER_SPLASH),
+	LARGE_SMOKE("largesmoke", 22, EnumParticle.SMOKE_LARGE),
+	CLOUD("cloud", 23, EnumParticle.CLOUD),
+	RED_DUST("reddust", 24, EnumParticle.REDSTONE),
+	SNOWBALL_POOF("snowballpoof", 25, EnumParticle.SNOWBALL),
+	DRIP_WATER("dripWater", 26, EnumParticle.DRIP_WATER),
+	DRIP_LAVA("dripLava", 27, EnumParticle.DRIP_LAVA),
+	SNOW_SHOVEL("snowshovel", 28, EnumParticle.SNOW_SHOVEL),
+	SLIME("slime", 29, EnumParticle.SLIME),
+	HEART("heart", 30, EnumParticle.HEART),
+	ANGRY_VILLAGER("angryVillager", 31, EnumParticle.VILLAGER_ANGRY),
+	HAPPY_VILLAGER("happyVillager", 32, EnumParticle.VILLAGER_HAPPY);
 
 	private static final Map<String, ParticleEffect> NAME_MAP;
 	private static final Map<Integer, ParticleEffect> ID_MAP;
@@ -24,6 +57,7 @@ public enum ParticleEffect
 	private static Constructor<?> PARTICLE_PACKET_CONSTRUCTOR;
 	private String name;
 	private int id;
+	private EnumParticle enumRef;
 
 	static
 	{
@@ -44,10 +78,11 @@ public enum ParticleEffect
 		}
 	}
 
-	private ParticleEffect(String name, int id)
+	private ParticleEffect(String name, int id, EnumParticle enumRef)
 	{
 		this.name = name;
 		this.id = id;
+		this.enumRef = enumRef;
 	}
 
 	public String getName()
@@ -96,13 +131,14 @@ public enum ParticleEffect
 		}
 		try
 		{
-			Object p = PARTICLE_PACKET_CONSTRUCTOR.newInstance(new Object[0]);
-			ReflectionUtil.setValues(p, new ReflectionUtil.FieldEntry[] { new ReflectionUtil.FieldEntry("a", name), new ReflectionUtil.FieldEntry("b", Float.valueOf((float)loc.getX())), new ReflectionUtil.FieldEntry("c", Float.valueOf((float)loc.getY())), new ReflectionUtil.FieldEntry("d", Float.valueOf((float)loc.getZ())), new ReflectionUtil.FieldEntry("e", Float.valueOf(offsetX)), new ReflectionUtil.FieldEntry("f", Float.valueOf(offsetY)), new ReflectionUtil.FieldEntry("g", Float.valueOf(offsetZ)), new ReflectionUtil.FieldEntry("h", Float.valueOf(speed)), new ReflectionUtil.FieldEntry("i", Integer.valueOf(amount)) });
+			Object p = PARTICLE_PACKET_CONSTRUCTOR.newInstance(new Object[0]);;
+			ReflectionUtil.setValues(p, new ReflectionUtil.FieldEntry[] { new ReflectionUtil.FieldEntry("a", fromName(name).enumRef), new ReflectionUtil.FieldEntry("b", Float.valueOf((float)loc.getX())), new ReflectionUtil.FieldEntry("c", Float.valueOf((float)loc.getY())), new ReflectionUtil.FieldEntry("d", Float.valueOf((float)loc.getZ())), new ReflectionUtil.FieldEntry("e", Float.valueOf(offsetX)), new ReflectionUtil.FieldEntry("f", Float.valueOf(offsetY)), new ReflectionUtil.FieldEntry("g", Float.valueOf(offsetZ)), new ReflectionUtil.FieldEntry("h", Float.valueOf(speed)), new ReflectionUtil.FieldEntry("i", Integer.valueOf(amount)) });
 
 			return p;
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			Bukkit.getLogger().warning("[ParticleEffect] Failed to create a particle packet!");
 		}
 		return null;
